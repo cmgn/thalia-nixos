@@ -17,9 +17,34 @@
 
   networking.hostName = "thalia";
   networking.timeServers = [ "time.google.com" ];
+  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
   networking.useDHCP = false;
+  networking.defaultGateway = {
+    address = "172.31.1.1";
+    interface = "ens3";
+  };
+  networking.defaultGateway6 = {
+    address = "fe80::1";
+    interface = "ens3";
+  };
   networking.interfaces.ens3 = {
-    useDHCP = true;
+    useDHCP = false;
+    ipv4 = {
+      addresses = [
+        {
+          address = "157.90.233.40";
+          prefixLength = 32;
+        }
+      ];
+    };
+    ipv6 = {
+      addresses = [
+        {
+          address = "2a01:4f8:1c1c:79e5::1";
+          prefixLength = 64;
+        }
+      ];
+    };
   };
 
   time.timeZone = "Europe/Dublin";
