@@ -8,6 +8,7 @@
       ./fail2ban.nix
       ./monitoring.nix
       ./wireguard.nix
+      ./databases.nix
     ];
 
   boot.loader.grub.enable = true;
