@@ -9,6 +9,7 @@
       ./monitoring.nix
       ./wireguard.nix
       ./databases.nix
+      ./keycloak.nix
     ];
 
   boot.loader.grub.enable = true;
