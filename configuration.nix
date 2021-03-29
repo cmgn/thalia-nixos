@@ -11,6 +11,7 @@
       ./databases.nix
       ./keycloak.nix
       ./hedgedoc.nix
+      ./ldap.nix
     ];
 
   boot.loader.grub.enable = true;
