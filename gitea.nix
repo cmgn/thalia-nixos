@@ -1,7 +1,6 @@
 { ... }:
 let
   giteaUsername = builtins.readFile "/var/secrets/gitea/database_user";
-  giteaPassword = builtins.readFile "/var/secrets/gitea/database_password";
   giteaDatabase = builtins.readFile "/var/secrets/gitea/database_name";
 in
 {
@@ -12,11 +11,11 @@ in
       type = "postgres";
       port = 5432;
       user = giteaUsername;
-      password = giteaPassword;
+      passwordFile = "/var/secrets/gitea/database_password";
       name = giteaDatabase;
     };
     rootUrl = "https://git.cmgn.io";
-    disableRegistration = true;
+    disableRegistration = false;
   };
 
   services.postgresql = {

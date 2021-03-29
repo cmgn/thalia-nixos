@@ -21,26 +21,25 @@ let
       relabel_configs:
         - source_labels: ['__journal__systemd_unit']
           target_label: 'unit'
-    '';
-  ldapConfig = pkgs.writeText "ldap.toml" ''
-    [[servers]]
-    host = "localhost"
-    port = 389
-    bind_dn = "cn=root,dc=cmgn,dc=io"
-    bind_password = "${builtins.readFile "/var/secrets/ldap/password"}"
-    search_filter = "(uid=%s)"
-    search_base_dns = ["ou=users,dc=cmgn,dc=io"]
   '';
+
+  grafanaOauthSecret = builtins.readFile "/var/secrets/grafana/oauth_secret";
+
 in {
   services.grafana = {
     enable = true;
     domain = "grafana.cmgn.io";
+    rootUrl = "https://grafana.cmgn.io";
     port = 2342;
     addr = "127.0.0.1";
     extraOptions = {
-      AUTH_LDAP_ENABLED = "true";
-      AUTH_LDAP_CONFIG_FILE = ldapConfig;
-      AUTH_LDAP_ALLOW_SIGN_UP = "true";
+      AUTH_GENERIC_OAUTH_ENABLED = "true";
+      AUTH_GENERIC_OAUTH_CLIENT_ID = "grafana";
+      AUTH_GENERIC_OAUTH_CLIENT_SECRET = grafanaOauthSecret;
+      AUTH_GENERIC_OAUTH_SCOPES = "openid profile email";
+      AUTH_GENERIC_OAUTH_AUTH_URL = "https://keycloak.cmgn.io/auth/realms/master/protocol/openid-connect/auth";
+      AUTH_GENERIC_OAUTH_TOKEN_URL = "https://keycloak.cmgn.io/auth/realms/master/protocol/openid-connect/token";
+      AUTH_GENERIC_OAUTH_API_URL = "https://keycloak.cmgn.io/auth/realms/master/protocol/openid-connect/userinfo";
     };
   };
 
