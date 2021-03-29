@@ -17,11 +17,11 @@ in
         searchBase = "ou=users,dc=cmgn,dc=io";
         bindDn = "cn=root,dc=cmgn,dc=io";
         bindCredentials = ldapRootPassword;
-        searchAttributes = [ "cn" ];
-        searchFilter = "(cn={{username}})";
+        searchAttributes = [ "uid" ];
+        searchFilter = "(uid={{username}})";
         url = "ldap:///";
         tlsca = "server-cert.pem,root.pem";
-        useridField = "cn";
+        useridField = "uid";
       };
     };
   };

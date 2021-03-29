@@ -63,11 +63,14 @@
         objectClass: organizationalUnit
         ou: users
 
-        dn: cn=cmgn,ou=users,dc=cmgn,dc=io
+        dn: uid=cmgn,ou=users,dc=cmgn,dc=io
         objectClass: top
         objectClass: person
-        cn: cmgn
-        sn: cmgn
+        objectClass: inetOrgPerson
+        cn: Conor
+        sn: McGovern
+        uid: cmgn
+        mail: conor@cmgn.io
         userPassword: {SSHA}VGyNXmekG29OemJ/4cDQVc88rCKhLf7/
       '';
     };

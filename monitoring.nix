@@ -28,7 +28,7 @@ let
     port = 389
     bind_dn = "cn=root,dc=cmgn,dc=io"
     bind_password = "${builtins.readFile "/var/secrets/ldap/password"}"
-    search_filter = "(cn=%s)"
+    search_filter = "(uid=%s)"
     search_base_dns = ["ou=users,dc=cmgn,dc=io"]
   '';
 in {
