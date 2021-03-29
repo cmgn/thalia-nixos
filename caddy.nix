@@ -22,6 +22,9 @@
     keycloak.cmgn.io {
       reverse_proxy 127.0.0.1:${toString config.services.keycloak.httpPort}
     }
+    git.cmgn.io {
+      reverse_proxy 127.0.0.1:${toString config.services.gitea.httpPort}
+    }
     '';
   };
 

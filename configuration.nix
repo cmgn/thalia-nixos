@@ -12,6 +12,7 @@
       ./keycloak.nix
       ./hedgedoc.nix
       ./ldap.nix
+      ./gitea.nix
     ];
 
   boot.loader.grub.enable = true;
