@@ -10,6 +10,7 @@
       ./wireguard.nix
       ./databases.nix
       ./keycloak.nix
+      ./hedgedoc.nix
     ];
 
   boot.loader.grub.enable = true;
