@@ -2,6 +2,8 @@
 let
   giteaUsername = builtins.readFile "/var/secrets/gitea/database_user";
   giteaDatabase = builtins.readFile "/var/secrets/gitea/database_name";
+  giteaSmtpUsername = builtins.readFile "/var/secrets/gitea/mail_username";
+  giteaSmtpPassword = builtins.readFile "/var/secrets/gitea/mail_password";
 in
 {
   services.gitea = {
@@ -16,6 +18,17 @@ in
     };
     rootUrl = "https://git.cmgn.io";
     disableRegistration = false;
+    settings = {
+      mailer = {
+        ENABLED = "true";
+        HOST = "smtp.gmail.com:465";
+        FROM = "services@cmgn.io";
+        MAILER_TYPE = "smtp";
+        IS_TLS_ENABLED = "true";
+        USER = giteaSmtpUsername;
+        PASSWD = giteaSmtpPassword;
+      };
+    };
   };
 
   services.postgresql = {
