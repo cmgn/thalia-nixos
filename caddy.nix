@@ -8,7 +8,7 @@
       encode gzip
       log
       root * /srv/cmgn.io
-      file_server
+      file_server browse
     }
     www.cmgn.io {
       redir https://cmgn.io{uri} permanent
@@ -23,7 +23,7 @@
       reverse_proxy 127.0.0.1:${toString config.services.keycloak.httpPort}
     }
     git.cmgn.io {
-      reverse_proxy 127.0.0.1:${toString config.services.gitea.httpPort}
+      reverse_proxy unix//run/gitlab/gitlab-workhorse.socket
     }
     '';
   };
