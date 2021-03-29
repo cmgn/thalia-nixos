@@ -4,6 +4,7 @@ let
   hedgedocUsername = builtins.readFile "/var/secrets/hedgedoc/database_user";
   hedgedocPassword = builtins.readFile "/var/secrets/hedgedoc/database_password";
   hedgedocDatabase = builtins.readFile "/var/secrets/hedgedoc/database_name";
+  ldapRootPassword = builtins.readFile "/var/secrets/ldap/password";
 in
 {
   services.hedgedoc = {
@@ -11,11 +12,16 @@ in
     configuration = {
       dbURL = "postgres://${hedgedocUsername}:${hedgedocPassword}@localhost:5432/${hedgedocDatabase}";
       allowAnonymous = false;
-      saml = {
-        issuer = "hedgedoc";
-        identifierFormat = "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified";
-        idpSsoUrl = "https://keycloak.cmgn.io/auth/realms/master/protocol/saml";
-        idpCert = "/var/secrets/hedgedoc/idp";
+      email = false;
+      ldap = {
+        searchBase = "ou=users,dc=cmgn,dc=io";
+        bindDn = "cn=root,dc=cmgn,dc=io";
+        bindCredentials = ldapRootPassword;
+        searchAttributes = [ "cn" ];
+        searchFilter = "(cn={{username}})";
+        url = "ldap:///";
+        tlsca = "server-cert.pem,root.pem";
+        useridField = "cn";
       };
     };
   };
