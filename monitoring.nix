@@ -22,12 +22,26 @@ let
         - source_labels: ['__journal__systemd_unit']
           target_label: 'unit'
     '';
+  ldapConfig = pkgs.writeText "ldap.toml" ''
+    [[servers]]
+    host = "localhost"
+    port = 389
+    bind_dn = "cn=root,dc=cmgn,dc=io"
+    bind_password = "${builtins.readFile "/var/secrets/ldap/password"}"
+    search_filter = "(cn=%s)"
+    search_base_dns = ["ou=users,dc=cmgn,dc=io"]
+  '';
 in {
   services.grafana = {
     enable = true;
     domain = "grafana.cmgn.io";
     port = 2342;
     addr = "127.0.0.1";
+    extraOptions = {
+      AUTH_LDAP_ENABLED = "true";
+      AUTH_LDAP_CONFIG_FILE = ldapConfig;
+      AUTH_LDAP_ALLOW_SIGN_UP = "true";
+    };
   };
 
   services.prometheus = {
