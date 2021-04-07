@@ -3,6 +3,9 @@
 {
   services.gitlab = {
     enable = true;
+    host = "git.cmgn.io";
+    port = 443;
+    https = true;
     initialRootEmail = "services@cmgn.io";
     initialRootPasswordFile = "/var/secrets/gitlab/password";
     secrets = {
@@ -46,6 +49,7 @@
       # runner for building in docker via host's nix-daemon
       # nix store will be readable in runner, might be insecure
       nix = {
+        cloneUrl = "https://git.cmgn.io";
         # File should contain at least these two variables:
         # `CI_SERVER_URL`
         # `REGISTRATION_TOKEN`
