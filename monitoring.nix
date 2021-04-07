@@ -40,6 +40,12 @@ in {
       AUTH_GENERIC_OAUTH_AUTH_URL = "https://keycloak.cmgn.io/auth/realms/master/protocol/openid-connect/auth";
       AUTH_GENERIC_OAUTH_TOKEN_URL = "https://keycloak.cmgn.io/auth/realms/master/protocol/openid-connect/token";
       AUTH_GENERIC_OAUTH_API_URL = "https://keycloak.cmgn.io/auth/realms/master/protocol/openid-connect/userinfo";
+      SMTP_ENABLED = "true";
+      SMTP_HOST = "smtp.gmail.com:587";
+      SMTP_USER = builtins.readFile "/var/secrets/mail/username";
+      SMTP_PASSWORD = builtins.readFile "/var/secrets/mail/password";
+      SMTP_FROM_ADDRESS = "services@cmgn.io";
+      SMTP_FROM_NAME = "Grafana";
     };
   };
 
@@ -51,7 +57,7 @@ in {
       node = {
         enable = true;
         enabledCollectors = [ "systemd" ];
-        port= 9002;
+        port = 9002;
       };
     };
 
