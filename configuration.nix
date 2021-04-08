@@ -7,7 +7,6 @@
       ./caddy.nix
       ./fail2ban.nix
       ./monitoring.nix
-      ./wireguard.nix
       ./databases.nix
       ./keycloak.nix
       ./hedgedoc.nix
@@ -21,7 +20,8 @@
 
   networking.hostName = "thalia";
   networking.timeServers = [ "time.google.com" ];
-  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
+  networking.nameservers = [ "100.100.100.100" "8.8.8.8" "8.8.4.4" ];
+  networking.search = [ "cmgn.io.beta.tailscale.net" ];
   networking.useDHCP = false;
   networking.defaultGateway = {
     address = "172.31.1.1";
@@ -79,6 +79,7 @@
   networking.firewall.allowedTCPPorts = [ 22 ];
 
   services.cron.enable = true;
+  services.tailscale.enable = true;
 
   system.stateVersion = "20.09";
 }
