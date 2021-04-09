@@ -25,6 +25,13 @@
     git.cmgn.io {
       reverse_proxy unix//run/gitlab/gitlab-workhorse.socket
     }
+    rss.cmgn.io {
+      root * /var/lib/tt-rss
+      file_server
+      php_fastcgi unix//run/phpfpm/${config.services.tt-rss.pool}.sock {
+        env SELF_URL_PATH https://rss.cmgn.io/
+      }
+    }
     '';
   };
 

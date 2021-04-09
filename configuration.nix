@@ -12,6 +12,7 @@
       ./hedgedoc.nix
       ./ldap.nix
       ./gitlab.nix
+      ./tt-rss.nix
     ];
 
   boot.loader.grub.enable = true;
